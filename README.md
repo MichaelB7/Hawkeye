@@ -20,8 +20,9 @@ Currently the second strongest open source chess engine available for the Mac be
 Plays very strong chess at time control of  75 sec base with 1.50 sec increment:
 
 (excerpt from tourney)
-1520 of 3800 games completed...
-time control: 7500+150
+
+1520 of 3800 games completed...time control: 7500+150
+
 Date: 07/10/16 : 12:49:18
 Rank Name                       Elo    +    - Games   Score    
    1 Stockfish 070916-x        3497   51   51   152   125.0   
