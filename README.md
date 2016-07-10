@@ -13,7 +13,7 @@ The original Gull 3 source code by Vadim Demichev is in the "public domain".  Th
 released under the MIT License by Basil Falcinelli as is this software.
 
 
-The syzygy code ( all files in the syzygy folder) was authored  by Ronald de Man Copyright (c) 2011-2016 Ronald de Man
+The syzygy code ( all files in the syzygy folder) was authored  by Ronald de Man Copyright (c) 2011-2016.
 These files may be redistributed and/or modified without restrictions.
 
 Currently the second strongest open source chess engine available for the Mac behind Stockfish. 
