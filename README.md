@@ -16,7 +16,9 @@ The syzygy code ( all files in the syzygy folder) was authored  by Ronald de Man
 These files may be redistributed and/or modified without restrictions.
 
 Currently the second strongest open source chess engine available for the Mac behind Stockfish.
+
 Plays very strong chess at time control of  75 sec base with 1.50 sec increment:
+
 (excerpt from tourney)
 1520 of 3800 games completed...
 time control: 7500+150
