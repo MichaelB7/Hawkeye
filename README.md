@@ -1,6 +1,5 @@
-# Hawkeyes
+# Hawkeye
 UCI Chess Engine based on Gull 3-syzygy
-Hawkeye-1.01
 =====================
 
 This is a Mac version the Hawkeye chess engine by Michael Byrne based on 
