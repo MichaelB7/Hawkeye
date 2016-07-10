@@ -18,7 +18,7 @@ These files may be redistributed and/or modified without restrictions.
 
 Currently the second strongest open source chess engine available for the Mac behind Stockfish. 
 Plays very strong chess at time 75 sec base with 1.50 sec inc.
-1520 of 3800 games completed...
+[code]1520 of 3800 games completed...
 time control: 7500+150
 Date: 07/10/16 : 12:49:18
 Rank Name                       Elo    +    - Games   Score    
@@ -36,4 +36,4 @@ Rank Name                       Elo    +    - Games   Score
   12 Hakkapeliitta TCEC v2     3139   44   44   152    64.5   
   13 Texel 1.05 64-bit         3094   44   44   152    55.5   
   14 Kohai 1.0                 3091   44   44   152    55.0   
-  15 Senpai 1.0                3081   44   44   152    54.0   
+  15 Senpai 1.0                3081   44   44   152    54.0[/code]
