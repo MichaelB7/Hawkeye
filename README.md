@@ -1,5 +1,5 @@
 # Hawkeyes
-UCI Chess Engine based on Gull
+UCI Chess Engine based on Gull 3-syzygy
 Hawkeye-1.01
 =====================
 
@@ -9,7 +9,7 @@ Gull version 3.
 License
 -------
 
-The original Gull 3 source code by Vadim Demichev is in the "public domain".  The modified Gull-3 source/exe was
+The original Gull 3 source code by Vadim Demichev is in the "public domain".  The modified Gull3 syzygy source/exe was
 released under the MIT License by Basil Falcinelli as is this software.
 
 
