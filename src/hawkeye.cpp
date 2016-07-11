@@ -1,5 +1,5 @@
 #define ENGINE "Hawkeye"
-#define VERSION "1.01"
+#define VERSION "1.02"
 #define AUTHORS "Vadim Demichev, Basil Falcinelli and Michael Byrne"
 #ifdef MACOSX
 #define PLATFORM "OSx64"
@@ -732,7 +732,7 @@ int RecordGames = 0;
 char RecordString[65536], PosStr[256], *Buffer;
 FILE * frec;
 #endif
-#define HawkeyeCpp "/Users/michaelbyrne/Documents/Sources/Hawkeye/Hawkeye-1.0.d/src.cpp"
+#define HawkeyeCpp "/Users/michaelbyrne/Documents/Sources/Hawkeye/Hawkeye-1.02.d/src.cpp"
 
 #define ArrayIndex(width,row,column) (((row) * (width)) + (column))
 #ifndef TUNER

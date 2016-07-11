@@ -787,10 +787,9 @@ static int probe_dtz_table(const struct pos *pos, int wdl, int *success)
     if (DTZ_table[0].key1 != key && DTZ_table[0].key2 != key)
     {
         for (i = 1; i < DTZ_ENTRIES; i++)
-        {
-            if (DTZ_table[i].key1 == key)
-                break;
-        }
+        ///mfb
+            if (DTZ_table[i].key1 == key || DTZ_table[i].key2 == key) break;
+        ///mfb
         if (i < DTZ_ENTRIES)
         {
             struct DTZTableEntry table_entry = DTZ_table[i];
@@ -1365,103 +1364,102 @@ static bool do_move(struct pos *pos, const struct pos *pos0, uint16_t move)
 
 static int probe_ab(const struct pos *pos, int alpha, int beta, int *success)
 {
-    int v;
-    uint16_t moves0[64];
-    uint16_t *moves = moves0;
-    uint16_t *end = gen_captures_or_promotions(pos, moves);
-    for (; moves < end; moves++)
-    {
-        if (is_en_passant(pos, *moves))
-            continue;
-        struct pos pos1;
-        if (!do_move(&pos1, pos, *moves))
-            continue;
-        v = -probe_ab(&pos1, -beta, -alpha, success);
-        if (*success == 0) 
-            return 0;
-        if (v > alpha)
-        { 
-            if (v >= beta) 
-            { 
-                *success = 2;
-                return v;
-            } 
-            alpha = v;
-        } 
-    }
-
-    v = probe_wdl_table(pos, success);
-    if (*success == 0)
-        return 0;
-    if (alpha >= v)
-    {
-        *success = 1 + (alpha > 0);
-        return alpha;
-    }
-    else
-    {
-        *success = 1;
-        return v;
-    }
+	int v;
+	uint16_t moves0[64];
+	uint16_t *moves = moves0;
+	uint16_t *end = gen_captures_or_promotions(pos, moves);
+	for (; moves < end; moves++)
+	{
+		if (is_en_passant(pos, *moves))
+		continue;
+		struct pos pos1;
+		if (!do_move(&pos1, pos, *moves))
+		continue;
+		v = -probe_ab(&pos1, -beta, -alpha, success);
+		if (*success == 0)
+		return 0;
+		if (v > alpha)
+		{
+			if (v >= beta)
+			{
+				*success = 2;
+				return v;
+			}
+			alpha = v;
+		}
+	}
+	
+	v = probe_wdl_table(pos, success);
+	if (*success == 0)
+	return 0;
+	if (alpha >= v)
+	{
+		*success = 1 + (alpha > 0);
+		return alpha;
+	}
+	else
+	{
+		*success = 1;
+		return v;
+	}
 }
 
 static int probe_wdl(const struct pos *pos, int *success)
 {
-    *success = 1;
-    int v = probe_ab(pos, -2, 2, success);
-    if (*success == 0)
-        return 0;
-
-    // If en passant is not possible, we are done.
-    if (pos->ep == 0)
-        return v;
-
-    // Now handle en passant.
-    int v1 = -3;
-    uint16_t moves0[2];      // Max=2 possible en-passant captures.
-    uint16_t *moves = moves0;
-    uint16_t *end = gen_pawn_ep_captures(pos, moves);
-    for (; moves < end; moves++)
-    {
-        struct pos pos1;
-        if (!do_move(&pos1, pos, *moves))
-            continue;
-        int v0 = -probe_ab(&pos1, -2, 2, success);
-        if (*success == 0)
-            return 0;
-        if (v0 > v1)
-            v1 = v0;
-    }
-    if (v1 > -3)
-    {
-        if (v1 >= v)
-            v = v1;
-        else if (v == 0)
-        {
-            // Check whether there is at least one legal non-ep move.
-            uint16_t moves0[MAX_MOVES];
-            uint16_t *moves = moves0;
-            uint16_t *end = gen_moves(pos, moves);
-            bool found = false;
-            for (; moves < end; moves++)
-            {
-                if (is_en_passant(pos, *moves))
-                    continue;
-                struct pos pos1;
-                if (do_move(&pos1, pos, *moves))
-                {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found)
-                v = v1;     // Forced to play the losing ep capture.
-        }
-    }
-
-    return v;
+	*success = 1;
+	int v = probe_ab(pos, -2, 2, success);
+	if (*success == 0)
+	return 0;
+	
+	// If en passant is not possible, we are done.
+	if (pos->ep == 0)
+	return v;
+	
+	// Now handle en passant.
+	int v1 = -3;
+	uint16_t moves0[2];      // Max=2 possible en-passant captures.
+	uint16_t *moves = moves0;
+	uint16_t *end = gen_pawn_ep_captures(pos, moves);
+	for (; moves < end; moves++)
+	{
+		struct pos pos1;
+		if (!do_move(&pos1, pos, *moves))
+		continue;
+		int v0 = -probe_ab(&pos1, -2, 2, success);
+		if (*success == 0)
+		return 0;
+		if (v0 > v1)
+		v1 = v0;
+	}
+	if (v1 > -3)
+	{
+		if (v1 >= v)
+		v = v1;
+		else if (v == 0)
+		{
+			// Check whether there is at least one legal non-ep move.
+			uint16_t moves0[MAX_MOVES];
+			uint16_t *moves = moves0;
+			uint16_t *end = gen_moves(pos, moves);
+			bool found = false;
+			for (; moves < end; moves++)
+			{
+				if (is_en_passant(pos, *moves))
+				continue;
+				struct pos pos1;
+				if (do_move(&pos1, pos, *moves))
+				{
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			v = v1;     // Forced to play the losing ep capture.
+		}
+	}
+	
+	return v;
 }
-
 static int probe_dtz_no_ep(const struct pos *pos, int *success)
 {
     int wdl, dtz;
@@ -1486,6 +1484,7 @@ static int probe_dtz_no_ep(const struct pos *pos, int *success)
                 continue;
             int v = (pos1.ep == 0?
                 -probe_ab(&pos1, -2, -wdl + 1, success):
+					 
                 -probe_wdl(&pos1, success));
             if (*success == 0)
                 return 0;
